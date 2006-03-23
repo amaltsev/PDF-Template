@@ -36,8 +36,11 @@ sub resolve
     for my $tok (@{$self->{STACK}})
     {
         my $val = $tok;
+
         $val = $val->resolve($context)
             if PDF::Template::Factory::isa($val, 'VAR');
+
+        $val='' unless defined $val;
 
         my $encoding = $context->get($self, 'PDF_ENCODING');
         if ($encoding) {

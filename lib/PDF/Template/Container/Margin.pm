@@ -25,6 +25,7 @@ sub enter_scope
 
     {
         no strict 'refs';
+        no warnings;
 
         my $class = ref $context;
         $self->{OLD_CHECK_EOP} = \&{"${class}::check_end_of_page"};
@@ -41,6 +42,7 @@ sub exit_scope
 
     {
         no strict 'refs';
+        no warnings;
 
         my $class = ref $context;
         *{"${class}::check_end_of_page"} = delete $self->{OLD_CHECK_EOP};

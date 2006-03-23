@@ -34,7 +34,6 @@ sub conditional_passes
     $val = @{$val} while UNIVERSAL::isa($val, 'ARRAY');
     $val = ${$val} while UNIVERSAL::isa($val, 'SCALAR');
 
-    my $istrue = (defined $val && $val) ? 1 : 0;
     my $value = $context->get($self, 'VALUE');
     if (defined $value)
     {
@@ -59,27 +58,28 @@ sub conditional_passes
             /^ge$/ && do { $res = ($val ge $value); last };
             /^le$/ && do { $res = ($val le $value); last };
 
-            die "Unknown operator '$op' in conditional resolve", $/;
+            die "Unknown operator in conditional resolve", $/;
         }
 
-        return 1;
+        return 0 unless $res;
     }
     elsif (my $is = uc $context->get($self, 'IS'))
     {
+        my $istrue = $val && 1;
         if ($is eq 'TRUE')
         {
-            return $istrue;
+            return 0 unless $istrue;
         }
         else
         {
             warn "Conditional 'is' value was [$is], defaulting to 'FALSE'" . $/
                 if $is ne 'FALSE';
 
-            return !$istrue;
+            return 0 if $istrue;
         }
     }
 
-    return $istrue;
+    return 1;
 }
 
 sub render
@@ -112,23 +112,6 @@ sub total_of
     return 0 unless $self->conditional_passes($context);
 
     return $self->SUPER::total_of($context, $attr);
-}
-
-sub _do_page
-{
-    my $self = shift;
-    return unless $self->conditional_passes(@_);
-    return $self->SUPER::_do_page( @_ );
-}
-
-sub begin_page
-{
-    _do_page(@_,'begin_page');
-}
-
-sub end_page
-{
-    _do_page(@_,'end_page');
 }
 
 1;
@@ -168,13 +151,9 @@ attribute, so if you want a parameter, prepend it with '$'.
 
 =item * IS - If there is no VALUE attribute, this will be checked. IS can be
 either 'FALSE' or 'TRUE'. The boolean of NAME will be compared and the
-conditional will branch appropriately. If NAME has no value, this will fail.
+conditional will branch appropriately.
 
-=item * NONE - If there is no IS and no VALUE, then an attempt will be made to
-find the variable defined by NAME. If it exists and is true, the condition
-will succeed. Otherwise, it will fail.
-
-=back
+=back 4
 
 =head1 CHILDREN
 

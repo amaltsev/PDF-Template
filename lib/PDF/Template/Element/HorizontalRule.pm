@@ -1,20 +1,13 @@
 package PDF::Template::Element::HorizontalRule;
-
 use strict;
-
-BEGIN {
-    use vars qw(@ISA);
-    @ISA = qw(PDF::Template::Element::Line);
-
-    use PDF::Template::Element::Line;
-}
+use base qw(PDF::Template::Element::Line);
 
 sub deltas
 {
     my $self = shift;
     my ($context) = @_;
 
-    my $y_shift = $self->{Y2} - $self->{Y1};
+    my $y_shift = ($self->{'Y2'} || 0) - ($self->{'Y1'} || 0);
     $y_shift = -1 * ($context->get($self, 'H') || 0) unless $y_shift;
 
     return {
