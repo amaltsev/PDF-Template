@@ -153,7 +153,7 @@ attribute, so if you want a parameter, prepend it with '$'.
 either 'FALSE' or 'TRUE'. The boolean of NAME will be compared and the
 conditional will branch appropriately.
 
-=back 4
+=back
 
 =head1 CHILDREN
 
