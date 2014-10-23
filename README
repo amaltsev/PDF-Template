@@ -1,0 +1,9 @@
+PDF::Template
+=============
+
+This is a set of unauthorized fixes for the PDF::Template code taken from CPAN:
+
+    http://search.cpan.org/~rkinyon/PDF-Template-0.29_02/
+
+It's been in daily use since 2006 (when the changes were made) and no
+problems were discovered since then.
