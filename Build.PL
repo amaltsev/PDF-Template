@@ -1,3 +1,4 @@
+#!/usr/bin/perl -w
 use Module::Build;
 
 use 5.8.0;
@@ -9,7 +10,7 @@ my $build = Module::Build->new(
     module_name => 'PDF::Template',
     license => 'perl',
     requires => {
-        'perl'        => '5.6.0',
+        'perl'        => '5.8.0',
         'PDF::Writer' => '0.05',
         'Encode'      => '0.01',
     },
@@ -22,7 +23,7 @@ my $build = Module::Build->new(
     create_makefile_pl => 'traditional',
     recursive_test_files => 1,
     add_to_cleanup => [
-        'META.yml', '*.bak', '*.gz', 'Makefile.PL',
+        'MYMETA.*', '*.bak', '*.gz', 'Makefile.PL',
     ],
 );
 

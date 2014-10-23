@@ -2,8 +2,6 @@ Build.PL
 MANIFEST
 MANIFEST.SKIP
 Changes
-Makefile.PL
-META.yml
 README
 lib/PDF/Template.pm
 lib/PDF/Template/Base.pm
